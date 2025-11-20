@@ -2,7 +2,7 @@ streamlit
 groq
 crewai
 crewai-tools
+litellm
 python-dotenv
 qdrant-client
 youtube-transcript-api
-google-genai
