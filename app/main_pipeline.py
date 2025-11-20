@@ -1,15 +1,21 @@
 from crewai import Crew, Process
-from app.tasks.analysis_task import analysis_task
-from app.tasks.writing_task import writing_task
-from app.agents.analysis_agent import content_investigator
-from app.agents.writing_agent import blog_creator
+from app.tasks.extraction_task import task_extraction
+from app.tasks.writing_task import task_writing
+from app.agents.transcript_agent import transcript_agent
+from app.agents.writer_agent import writer_agent
 
-pipeline = Crew(
-    agents=[content_investigator, blog_creator],
-    tasks=[analysis_task, writing_task],
-    process=Process.sequential
-)
+def run_pipeline():
+    crew = Crew(
+        agents=[transcript_agent, writer_agent],
+        tasks=[task_extraction, task_writing],
+        process=Process.sequential,
+        verbose=True
+    )
 
-def generate_blog(subject: str):
-    result = pipeline.kickoff(inputs={"subject": subject})
+    print("Starting pipeline...\n")
+    result = crew.kickoff()
+    print(result)
     return result
+
+if __name__ == "__main__":
+    run_pipeline()

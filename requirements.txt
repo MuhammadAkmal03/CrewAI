@@ -3,3 +3,6 @@ groq
 crewai
 crewai-tools
 python-dotenv
+qdrant-client
+youtube-transcript-api
+google-genai
