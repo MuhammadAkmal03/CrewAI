@@ -61,7 +61,7 @@ if st.button("Generate Blog"):
             log("Summary generated.")
 
         with st.spinner("Writing blog..."):
-            blog_content = run_pipeline(youtube_url)
+            blog_content = run_pipeline(youtube_url, blog_length=blog_length, include_faq=include_faq)
             log("Blog writing complete.")
 
         st.success("Blog generated successfully!")
