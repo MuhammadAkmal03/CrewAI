@@ -4,7 +4,7 @@ from app.tasks.writing_task import task_writing
 from app.agents.transcript_agent import transcript_agent
 from app.agents.writer_agent import writer_agent
 
-def run_pipeline():
+def run_pipeline(video_url: str):
     crew = Crew(
         agents=[transcript_agent, writer_agent],
         tasks=[task_extraction, task_writing],
@@ -12,10 +12,6 @@ def run_pipeline():
         verbose=True
     )
 
-    print("Starting pipeline...\n")
-    result = crew.kickoff()
-    print(result)
-    return result
-
-if __name__ == "__main__":
-    run_pipeline()
+    result = crew.kickoff(inputs={"video_url": video_url})
+    # Convert CrewOutput to string for easier handling
+    return str(result)
