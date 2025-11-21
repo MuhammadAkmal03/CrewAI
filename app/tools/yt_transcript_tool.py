@@ -1,6 +1,7 @@
 import os
 from crewai.tools.base_tool import BaseTool
 from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api.proxies import GenericProxyConfig
 from typing import Type
 from pydantic import BaseModel, Field
 
@@ -26,10 +27,7 @@ class YouTubeTranscriptTool(BaseTool):
             proxies = None
             proxy_url = os.getenv("YOUTUBE_PROXY")
             if proxy_url:
-                proxies = {
-                    "http": proxy_url,
-                    "https": proxy_url
-                }
+                proxies = GenericProxyConfig(http_url=proxy_url, https_url=proxy_url)
 
             # Use the class instantiation method which supports proxy_config
             transcript_api = YouTubeTranscriptApi(proxy_config=proxies)
