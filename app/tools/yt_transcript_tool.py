@@ -1,3 +1,4 @@
+import os
 from crewai.tools.base_tool import BaseTool
 from youtube_transcript_api import YouTubeTranscriptApi
 from typing import Type
@@ -22,7 +23,16 @@ class YouTubeTranscriptTool(BaseTool):
             else:
                 return "Invalid YouTube URL"
 
-            transcript_api = YouTubeTranscriptApi()
+            proxies = None
+            proxy_url = os.getenv("YOUTUBE_PROXY")
+            if proxy_url:
+                proxies = {
+                    "http": proxy_url,
+                    "https": proxy_url
+                }
+
+            # Use the class instantiation method which supports proxy_config
+            transcript_api = YouTubeTranscriptApi(proxy_config=proxies)
             transcript_data = transcript_api.fetch(
                 video_id,
                 languages=["en", "en-US"]
